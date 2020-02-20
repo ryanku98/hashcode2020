@@ -88,19 +88,45 @@ def sort_by_rate() ->list:
     result.append([x for _,x in sorted(zip(library_rate,library_id), reverse=True)])
     return result
 
-# def print_submission_file(input_order : dict):
-#     # input order: dictionary keyed by library ID, values are books inputed in order
-
+def print_submission_file(submission: str, num : int, input_order : list, libs : dict):
+    # libs: dictionary keyed by library ID, values are books inputed in order
+    file = open("submissions/" + submission, "w")
+    # file.write(str(num) + "\n")
+    n = len(libs)
+    file.write(str(n) + "\n")
+    for x, i in enumerate(input_order):
+        if x >= n:
+            break
+        try:
+            n_books = len(libs[i])
+        except:
+            continue
+        if n_books == 0:
+            continue
+        # write library index and number of books of from this library
+        file.write(str(i) + " " + str(n_books) + "\n")
+        # write in index of order of books inputed
+        for b in libs[i]:
+            file.write(str(b) + " ")
+        file.write("\n")
+    print("file closing")
+    file.close()
 
 if __name__ == "__main__":
     # main()
-    read_data("tests/a_example_revised.txt")
+    # filename = "a_example.txt"
+    # filename = "b_read_on.txt"
+    # filename = "c_incunabula.txt"
+    filename = "d_tough_choices.txt"
+    # filename = "e_so_many_books.txt"
+    # filename = "f_libraries_of_the_world.txt"
+    read_data("tests/" + filename)
     sign_up_by_total_score = sort_by_total_score()
     sign_up_by_signup = sort_by_signup()
     sign_up_by_rate = sort_by_rate()
-    print(sign_up_by_total_score)
-    print(sign_up_by_signup)
-    print(sign_up_by_rate)
+    # print(sign_up_by_total_score)
+    # print(sign_up_by_signup)
+    # print(sign_up_by_rate)
     all_orders = sign_up_by_total_score
     for l in sign_up_by_signup:
         all_orders.append(l)
@@ -110,13 +136,17 @@ if __name__ == "__main__":
     max_score = 0
     max_result = {}
     max_order = []
+    max_num = 0
     for o in all_orders:
-        score, result = gbook.computeScore(o, libraries)
+        score, result, num = gbook.computeScore(o, libraries)
         if max_score < score:
             max_order = o
             max_score = score
             max_result = result
-    print(max_score, max_result, max_order)
+            max_num = num
+    # print(max_score, max_result, max_order)
+    print_submission_file(filename, num, max_order, max_result)
+    print(max_score)
 
     # print(str(gbook.days) + " " + str(gbook.library))
     # print(str(total_num_books) + " " + str(num_libraries) + " " + str(total_days))
