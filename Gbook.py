@@ -14,10 +14,12 @@ class Gbooks:
         self.score = 0
         self.stored_books = {}
         days_left = self.days
+        result = {}
         #Go through the libaries in given order
         for lib_num in order:
             days_left -= libraries[lib_num].signup_process  #days left after signup
             rate = libraries[lib_num].shipping_rate         #get the shipping rate of this library
+            books_used = []
             #if there is no more days left to process after signup, quit the loop
             if days_left <= 0:
                 break
@@ -32,6 +34,7 @@ class Gbooks:
                     #store the shipped books into a dictionary so we don't repeat
                     if libraries[lib_num].book_ids[count] not in self.stored_books.keys():
                         self.stored_books[libraries[lib_num].book_ids[count]] = libraries[lib_num].scores[count]
+                        books_used.append(libraries[lib_num].book_ids[count])
                         count += 1
                         rate_count += 1
                         #if we reached max shipping per day, move one ot next day & reset rate_counter
@@ -40,12 +43,13 @@ class Gbooks:
                             rate_count = 0
                     else:
                         count += 1
+                result[lib_num] = books_used
 
         #compute the score in Gbook for this method
         for key in self.stored_books:
             self.score += self.stored_books[key]
 
-        return self.score
+        return self.score, result
 
 if __name__ == "__main__":
     scores = [1, 2, 3, 6, 5, 4]

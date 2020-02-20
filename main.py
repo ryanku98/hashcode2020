@@ -88,8 +88,8 @@ def sort_by_rate() ->list:
     result.append([x for _,x in sorted(zip(library_rate,library_id), reverse=True)])
     return result
 
-def print_submission_file(input_order : dict):
-    # input order: dictionary keyed by library ID, values are books inputed in order
+# def print_submission_file(input_order : dict):
+#     # input order: dictionary keyed by library ID, values are books inputed in order
 
 
 if __name__ == "__main__":
@@ -107,8 +107,17 @@ if __name__ == "__main__":
     for l in sign_up_by_rate:
         all_orders.append(l)
 
+    max_score = 0
+    max_result = {}
+    max_order = []
     for o in all_orders:
-        gbook.computeScore(o, libraries)
+        score, result = gbook.computeScore(o, libraries)
+        if max_score < score:
+            max_order = o
+            max_score = score
+            max_result = result
+    print(max_score, max_result, max_order)
+
     # print(str(gbook.days) + " " + str(gbook.library))
     # print(str(total_num_books) + " " + str(num_libraries) + " " + str(total_days))
     # print(book_scores)
