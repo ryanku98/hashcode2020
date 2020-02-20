@@ -30,13 +30,16 @@ class Gbooks:
                 #continue as long as we have days to process and there is book to ship
                 while(day_counter < days_left and count < length):
                     #store the shipped books into a dictionary so we don't repeat
-                    self.stored_books[libraries[lib_num].book_ids[count]] = libraries[lib_num].scores[count]
-                    count += 1
-                    rate_count += 1
-                    #if we reached max shipping per day, move one ot next day & reset rate_counter
-                    if rate_count == rate:
-                        day_counter +=1
-                        rate_count = 0
+                    if libraries[lib_num].book_ids[count] not in self.stored_books.keys():
+                        self.stored_books[libraries[lib_num].book_ids[count]] = libraries[lib_num].scores[count]
+                        count += 1
+                        rate_count += 1
+                        #if we reached max shipping per day, move one ot next day & reset rate_counter
+                        if rate_count == rate:
+                            day_counter +=1
+                            rate_count = 0
+                    else:
+                        count += 1
 
         #compute the score in Gbook for this method
         for key in self.stored_books:
