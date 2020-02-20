@@ -43,7 +43,7 @@ class Gbooks:
                             rate_count = 0
                     else:
                         count += 1
-                result[lib_num] = books_used
+                result[int(lib_num)] = books_used
 
         #compute the score in Gbook for this method
         for key in self.stored_books:
