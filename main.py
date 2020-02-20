@@ -41,6 +41,27 @@ def read_data(filepath):
         line = file.readline().split(" ")
         libraries[i] = Library(num_books, signup_process, shipping_rate, [int(i) for i in line], book_scores)
 
+# return array of arrays of order to signup libraries
+def sort_by_total_score()->list:
+    orders = []             # array of all the orders
+    library_scores = []     # scores of each library
+    library_order = []      # index of libraries, parallel to library_scores
+    for i, lib in libraries.items():
+        library_scores.append(lib.total_score)
+        library_order.append(i)
+
+    zipped = list(zip(library_scores, library_order))
+    # sort by descending order
+    zipped.sort(reverse = True)
+    s, o = zip(*zipped)
+    orders.append(o)
+    # include ascending order
+    zipped.sort()
+    s, o = zip(*zipped)
+    orders.append(o)
+
+    return orders
+
 def sort_by_signup()->list:
     library_signup_time =[]
     library_id = []
@@ -67,15 +88,18 @@ def sort_by_rate() ->list:
     result.append([x for _,x in sorted(zip(library_rate,library_id), reverse=True)])
     return result
 
-
 if __name__ == "__main__":
     # main()
     read_data("tests/a_example_revised.txt")
+    sign_up_by_total_score = sort_by_total_score()
     sign_up_by_signup = sort_by_signup()
     sign_up_by_rate = sort_by_rate()
-    print(str(gbook.days) + " " + str(gbook.library))
-    print(str(total_num_books) + " " + str(num_libraries) + " " + str(total_days))
-    print(book_scores)
-    for lib in libraries.values():
-        print(str(lib.num_books) + " " + str(lib.signup_process) + " " + str(lib.shipping_rate))
-        print(lib.book_ids)
+    print(sign_up_by_total_score)
+    print(sign_up_by_signup)
+    print(sign_up_by_rate)
+    # print(str(gbook.days) + " " + str(gbook.library))
+    # print(str(total_num_books) + " " + str(num_libraries) + " " + str(total_days))
+    # print(book_scores)
+    # for lib in libraries.values():
+    #     print(str(lib.num_books) + " " + str(lib.signup_process) + " " + str(lib.shipping_rate))
+    #     print(lib.book_ids)
