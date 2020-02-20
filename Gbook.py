@@ -4,7 +4,7 @@ import os
 from Library import Library
 
 class Gbooks:
-    def __init__(self, days: int, num_lib:int ) -> int:
+    def __init__(self, days: int, num_lib: int):
         self.days = days              #Save total time limit we have
         self.library = num_lib        #Total amount of libraries
         self.stored_books ={}            #The books inside G Books
