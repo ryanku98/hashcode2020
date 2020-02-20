@@ -47,20 +47,32 @@ def sort_by_signup()->list:
     result = []
     #Put the all the signup time of all libraries into a list
     for key in libraries:
-        library_signup_time.append(libraries[key].shipping_rate)
+        library_signup_time.append(libraries[key].signup_process)
         library_id.append(key)
-    #sort the order of list based on signup time, result in a list of library id 
+    #sort the order of list based on signup time, result in a list of library id
     result.append([x for _,x in sorted(zip(library_signup_time,library_id))])
     result.append([x for _,x in sorted(zip(library_signup_time,library_id), reverse=True)])
     return result
 
-
+def sort_by_rate() ->list:
+    library_rate =[]
+    library_id = []
+    result = []
+    #Put the all the shipping rate of all libraries into a list
+    for key in libraries:
+        library_rate.append(libraries[key].shipping_rate)
+        library_id.append(key)
+    #sort the order of list based on shipping rate, result in a list of library id
+    result.append([x for _,x in sorted(zip(library_rate,library_id))])
+    result.append([x for _,x in sorted(zip(library_rate,library_id), reverse=True)])
+    return result
 
 
 if __name__ == "__main__":
     # main()
     read_data("tests/a_example_revised.txt")
-    sign_up_list = sort_by_signup()
+    sign_up_by_signup = sort_by_signup()
+    sign_up_by_rate = sort_by_rate()
     print(str(gbook.days) + " " + str(gbook.library))
     print(str(total_num_books) + " " + str(num_libraries) + " " + str(total_days))
     print(book_scores)
