@@ -27,9 +27,9 @@ class Library():
         print("self.scores: " + str(self.scores))
         print("self.total_days: " + str(self.total_days))
 
-if __name__ == "__main__":
-    scores = [1, 2, 3, 6, 5, 4]
-    lib1 = Library(5, 2, 2, [0, 1, 2, 3, 4], scores)
-    lib1.print_basic_data()
-    lib2 = Library(4, 3, 1, [0, 2, 3, 5], scores)
-    lib2.print_basic_data()
+# if __name__ == "__main__":
+#     scores = [1, 2, 3, 6, 5, 4]
+#     lib1 = Library(5, 2, 2, [0, 1, 2, 3, 4], scores)
+#     lib1.print_basic_data()
+#     lib2 = Library(4, 3, 1, [0, 2, 3, 5], scores)
+#     lib2.print_basic_data()
